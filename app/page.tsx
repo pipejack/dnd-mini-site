@@ -1,9 +1,12 @@
 "use client";
-"use client";
 
 import { useState } from "react";
 import Image from "next/image";
 import BuilderClient from "./components/BuilderClient";
+import FlowClient from "./components/FlowClient";
+
+
+import './globals.css';
 
 export default function Home() {
   const [selectedSvg, setSelectedSvg] = useState<string | null>(null);
@@ -100,6 +103,10 @@ export default function Home() {
               </div>
               <p className="hint">Select an image to see the model page.</p>
             </aside>
+          </div>
+          <div className="demo-flow">
+            <h3>Quick Demo Flow</h3>
+            <FlowClient />
           </div>
         </div>
       </section>

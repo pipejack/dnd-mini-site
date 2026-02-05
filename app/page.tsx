@@ -1,65 +1,120 @@
-import Image from "next/image";
+"use client";
+
+import { useRef, useState } from "react";
+
+type Option = {
+  label: string;
+  value: string;
+};
+
+const races: Option[] = [
+  { label: "Human", value: "human" },
+  { label: "Elf", value: "elf" },
+  { label: "Dwarf", value: "dwarf" },
+  { label: "Orc", value: "orc" },
+];
+
+const classes: Option[] = [
+  { label: "Fighter", value: "fighter" },
+  { label: "Wizard", value: "wizard" },
+  { label: "Rogue", value: "rogue" },
+  { label: "Cleric", value: "cleric" },
+];
 
 export default function Home() {
+  const [race, setRace] = useState<string>(races[0].value);
+  const [klass, setKlass] = useState<string>(classes[0].value);
+  const [color, setColor] = useState<string>("#6b46c1");
+  const [scale, setScale] = useState<number>(100);
+  const [svg, setSvg] = useState<string>(generateSvg(races[0].value, classes[0].value, "#6b46c1", 1));
+  const previewRef = useRef<HTMLDivElement | null>(null);
+
+  function handleGenerate(e?: React.FormEvent) {
+    e?.preventDefault();
+    const s = generateSvg(race, klass, color, scale / 100);
+    setSvg(s);
+  }
+
+  function handlePrint() {
+    const w = window.open("", "_blank", "noopener,noreferrer");
+    if (!w) return;
+    const html = `<!doctype html><html><head><meta charset=\"utf-8\"><title>Print Figurine</title><style>body{display:flex;align-items:center;justify-content:center;height:100vh;margin:0}svg{width:80vmin;height:auto}</style></head><body>${svg}</body></html>`;
+    w.document.open();
+    w.document.write(html);
+    w.document.close();
+    setTimeout(() => { w.print(); }, 300);
+  }
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            future dnd figurine site.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+    <div className="landing-root">
+      <header className="hero">
+        <h1 className="title">Create & Print Your Custom D&D Figurine</h1>
+        <p className="subtitle">Design a compact 2D model you can print and assemble.</p>
+      </header>
+
+      <main className="container">
+        <section className="controls">
+          <form onSubmit={handleGenerate} className="form">
+            <label>
+              Race
+              <select value={race} onChange={(e) => setRace(e.target.value)}>
+                {races.map((r) => (
+                  <option key={r.value} value={r.value}>{r.label}</option>
+                ))}
+              </select>
+            </label>
+
+            <label>
+              Class
+              <select value={klass} onChange={(e) => setKlass(e.target.value)}>
+                {classes.map((c) => (
+                  <option key={c.value} value={c.value}>{c.label}</option>
+                ))}
+              </select>
+            </label>
+
+            <label>
+              Primary Color
+              <input type="color" value={color} onChange={(e) => setColor(e.target.value)} />
+            </label>
+
+            <label>
+              Scale ({scale}%)
+              <input type="range" min={50} max={150} value={scale} onChange={(e) => setScale(Number(e.target.value))} />
+            </label>
+
+            <div className="buttons">
+              <button type="submit" className="btn primary">Generate</button>
+              <button type="button" className="btn" onClick={handlePrint}>Print Figurine</button>
+            </div>
+          </form>
+        </section>
+
+        <section className="preview" ref={previewRef} aria-label="Figurine preview">
+          <div className="preview-canvas" dangerouslySetInnerHTML={{ __html: svg }} />
+          <p className="preview-hint">Tip: use "Print Figurine" to open a print-friendly view.</p>
+        </section>
       </main>
+
+      <footer className="footer">Built for tabletop creators — printable SVGs ready to scale.</footer>
     </div>
   );
+}
+
+function generateSvg(race: string, klass: string, color: string, scale = 1) {
+  const head = `<circle cx=\"100\" cy=\"70\" r=\"30\" fill=\"${color}\" stroke=\"#222\" stroke-width=\"3\"/>`;
+  const body = `<rect x=\"70\" y=\"100\" width=\"60\" height=\"90\" rx=\"8\" fill=\"${shade(color, -20)}\" stroke=\"#222\" stroke-width=\"3\"/>`;
+  const icon = `<text x=\"100\" y=\"150\" font-size=\"18\" text-anchor=\"middle\" fill=\"#fff\">${klass[0].toUpperCase()}</text>`;
+  const raceBadge = `<text x=\"100\" y=\"200\" font-size=\"12\" text-anchor=\"middle\" fill=\"#444\">${race}</text>`;
+
+  const svg = `<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 200 ${220 * scale}\" width=\"${200 * scale}\" height=\"${220 * scale}\">${head}${body}${icon}${raceBadge}</svg>`;
+  return svg;
+}
+
+function shade(hex: string, percent: number) {
+  const num = parseInt(hex.replace('#',''),16);
+  const r = Math.min(255, Math.max(0, (num>>16) + percent));
+  const g = Math.min(255, Math.max(0, ((num>>8)&0x00FF) + percent));
+  const b = Math.min(255, Math.max(0, (num & 0x0000FF) + percent));
+  return `#${(r<<16 | g<<8 | b).toString(16).padStart(6,'0')}`;
 }

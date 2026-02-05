@@ -1,9 +1,8 @@
 "use client";
 "use client";
 
-import Link from "next/link";
+import { useState } from "react";
 import Image from "next/image";
-import { useRef, useState } from "react";
 import BuilderClient from "./components/BuilderClient";
 
 export default function Home() {
@@ -25,7 +24,7 @@ export default function Home() {
         <div className="wrap">
           <header className="hero">
             <div className="brand">
-              <img src="/decor/crest.svg" alt="crest" className="crest" />
+              <Image src="/decor/crest.svg" alt="crest" className="crest" width={50} height={50} />
               <h1>FigurineForge</h1>
             </div>
             <div className="hero-copy">
@@ -37,7 +36,12 @@ export default function Home() {
               </div>
             </div>
             <div className="hero-art">
-              <img src="/figures/fig1.svg" alt="example figure" className="hero-figure" />
+              <Image src="/figures/fpic1.png" alt="example figure" className="hero-figure" width={400} height={400} />
+            </div>
+            <div className="figure-gallery" style={{marginTop:12, display:'flex', gap:10, justifyContent:'center'}}>
+              <Image src="/figures/fpic1.png" alt="photo 1" className="figure-thumb" width={100} height={100} onClick={() => setSelectedSvg('<img src="/figures/fpic1.png" alt="selected" />')} />
+              <Image src="/figures/fpic2.png" alt="photo 2" className="figure-thumb" width={100} height={100} onClick={() => setSelectedSvg('<img src="/figures/fpic2.png" alt="selected" />')} />
+              <Image src="/figures/fpic3.png" alt="photo 3" className="figure-thumb" width={100} height={100} onClick={() => setSelectedSvg('<img src="/figures/fpic3.png" alt="selected" />')} />
             </div>
           </header>
         </div>
@@ -91,7 +95,7 @@ export default function Home() {
                 {selectedSvg ? (
                   <div dangerouslySetInnerHTML={{ __html: selectedSvg }} />
                 ) : (
-                  <img src="/figures/fig2.svg" alt="placeholder" />
+                  <Image src="/figures/fpic2.png" alt="placeholder" style={{maxWidth:'100%',height:'auto'}} width={300} height={300} />
                 )}
               </div>
               <p className="hint">Select an image to see the model page.</p>

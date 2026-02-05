@@ -15,7 +15,7 @@ const handler = NextAuth({
   ],
   secret: process.env.NEXTAUTH_SECRET,
   callbacks: {
-    async session({ session, token, user }) {
+    async session({ session }) {
       // include any extra fields on session if needed
       return session;
     },

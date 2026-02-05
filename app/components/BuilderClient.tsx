@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
+import CharacterForm, { CharacterData } from "./CharacterForm";
 
 type Option = { label: string; value: string };
 
@@ -19,6 +20,8 @@ const classes: Option[] = [
 ];
 
 export default function BuilderClient({ onSelect }:{ onSelect?: (svg:string)=>void }) {
+  const [formData, setFormData] = useState<CharacterData | null>(null);
+  const [formValid, setFormValid] = useState<boolean>(false);
   const [race, setRace] = useState<string>(races[0].value);
   const [klass, setKlass] = useState<string>(classes[0].value);
   const [color, setColor] = useState<string>("#6b46c1");
@@ -28,6 +31,10 @@ export default function BuilderClient({ onSelect }:{ onSelect?: (svg:string)=>vo
 
   function handleGenerate(e?: React.FormEvent) {
     e?.preventDefault();
+    if (!formValid) {
+      // simple safeguard; CharacterForm displays validation messages
+      return;
+    }
     const s = generateSvg(race, klass, color, scale / 100);
     setSvg(s);
   }
@@ -39,6 +46,8 @@ export default function BuilderClient({ onSelect }:{ onSelect?: (svg:string)=>vo
   return (
     <div className="builder-root">
       <form onSubmit={handleGenerate} className="form">
+        <CharacterForm onChange={(data, valid)=>{ setFormData(data); setFormValid(valid); }} />
+
         <label>
           Race
           <select value={race} onChange={(e) => setRace(e.target.value)}>
@@ -68,7 +77,7 @@ export default function BuilderClient({ onSelect }:{ onSelect?: (svg:string)=>vo
         </label>
 
         <div className="buttons">
-          <button type="submit" className="btn primary">Generate</button>
+          <button type="submit" className="btn primary" disabled={!formValid}>Generate</button>
           <button type="button" className="btn" onClick={handleSelect}>Select This Image</button>
         </div>
       </form>

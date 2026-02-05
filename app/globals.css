@@ -145,6 +145,12 @@ html, body, #__next { height: 100%; }
 .preview-box { background:#fff; padding:12px; border-radius:10px; box-shadow:0 12px 28px rgba(2,6,23,0.06); min-height:320px; display:flex; align-items:center; justify-content:center; }
 .hint { margin-top:8px; color:#6b6b5d; }
 
+/* Character form styles */
+.char-form { display:flex; flex-direction:column; gap:10px; margin-bottom:8px; }
+.char-form label { display:flex; flex-direction:column; gap:6px; font-weight:600; }
+.char-form input, .char-form select, .char-form textarea { padding:8px; border-radius:6px; border:1px solid #ddd; }
+.field-error { color:#b91c1c; font-size:0.85rem; margin-top:6px; }
+
 .model-section { background:linear-gradient(180deg,#fff8f0 0%, #fff 100%); }
 .model-canvas { margin-top:12px; background:#fff; padding:18px; border-radius:12px; box-shadow:0 18px 40px rgba(2,6,23,0.06); min-height:360px; display:flex; align-items:center; justify-content:center; }
 .order-actions { margin-top:14px; display:flex; gap:12px; }

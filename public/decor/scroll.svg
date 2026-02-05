@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 160">
+  <rect width="800" height="160" rx="20" fill="#f8eee0" stroke="#cbb38c" stroke-width="6" />
+  <path d="M40 20 Q80 8 120 20 T200 20" fill="none" stroke="#cbb38c" stroke-width="4" opacity="0.6"/>
+  <g fill="#8b5e3c" font-size="28" font-family="Cinzel, serif" text-anchor="middle">
+    <text x="400" y="90">CUSTOM FIGURINES</text>
+  </g>
+</svg>

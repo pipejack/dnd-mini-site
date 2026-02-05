@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&display=swap');
 
 :root {
   --background: #ffffff;
@@ -22,7 +23,7 @@
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Cinzel, Georgia, 'Times New Roman', serif;
 }
 
 /* Landing page styles */
@@ -117,6 +118,47 @@ body {
   min-height: 100vh;
   position: relative;
 }
+
+/* Medieval overlays and animations */
+.parchment-frame { position:relative; padding:28px; border-radius:14px; margin:18px 0; }
+.ornate-border { position:relative; border-radius:14px; padding:26px; box-shadow: inset 0 0 0 6px rgba(58,34,4,0.06); border: 2px solid rgba(0,0,0,0.06); background: linear-gradient(180deg, rgba(255,250,240,0.9), rgba(245,235,210,0.9)); }
+.crest { width:84px; height:auto; filter:drop-shadow(0 6px 12px rgba(0,0,0,0.12)); }
+.torch { width:48px; height:auto; transform-origin:center bottom; }
+
+/* embers */
+.embers { position: absolute; inset:0; pointer-events:none; overflow:hidden; }
+.ember { position:absolute; width:6px; height:6px; background: radial-gradient(circle,#ffb86b,#ff6b35); border-radius:50%; opacity:0.9; filter:blur(0.6px); animation: ember-rise 4s linear infinite; }
+@keyframes ember-rise {
+  0% { transform: translateY(60vh) scale(0.6); opacity:0 }
+  10% { opacity:0.8 }
+  100% { transform: translateY(-20vh) scale(1.1); opacity:0 }
+}
+
+/* flicker for text */
+.flicker { animation: flicker 3s linear infinite; }
+@keyframes flicker {
+  0%,19%,21%,23%,25%,54%,56%,100% { text-shadow: 0 0 0 rgba(0,0,0,0); }
+  20% { text-shadow: 0 0 8px rgba(255,200,120,0.35); }
+  24% { text-shadow: 0 0 10px rgba(255,210,140,0.45); }
+}
+
+/* Unfurl scroll banner */
+.scroll-banner { width:100%; display:block; margin:10px 0 18px; }
+.scroll-unfurl { animation: unfurl 800ms ease forwards; transform-origin:top center; }
+@keyframes unfurl { from { transform: scaleY(0); opacity:0 } to { transform: scaleY(1); opacity:1 } }
+
+/* decorative corners */
+.ornate-corner { position:absolute; width:96px; height:96px; opacity:0.9; }
+.corner-tl { left:-28px; top:-18px; transform:rotate(-12deg); }
+.corner-br { right:-28px; bottom:-18px; transform:rotate(170deg); }
+
+/* subtle parallax movement */
+.parallax { transform: translateZ(0); animation: parallax 12s ease-in-out infinite; }
+@keyframes parallax { 0%{ transform:translateY(0)}50%{ transform:translateY(-8px)}100%{ transform:translateY(0)} }
+
+/* Darkened section backgrounds for medieval panels */
+.card { background: linear-gradient(180deg,#fff8ee,#f7ecd6); }
+
 
 /* burnt edges overlay */
 .dndb-root::before {

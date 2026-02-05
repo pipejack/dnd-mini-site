@@ -2,12 +2,11 @@
 import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
-import { useRef, useState } from "react";
+import { useState } from "react";
 
 const BuilderClient = dynamic(() => import("./components/BuilderClient"), { ssr: false });
 
 export default function Home() {
-  const modelRef = useRef<HTMLElement | null>(null);
   const [selectedSvg, setSelectedSvg] = useState<string | null>(null);
 
   function handleSelectModel(svg: string) {

@@ -171,6 +171,7 @@ body {
     radial-gradient(1000px 300px at 110% 110%, rgba(0,0,0,0.12), transparent 30%),
     radial-gradient(600px 200px at 50% 120%, rgba(0,0,0,0.06), transparent 30%);
   mix-blend-mode: multiply;
+  z-index: 0;
 }
 
 /* subtle paper texture using repeating linear gradients */
@@ -182,7 +183,11 @@ body {
   background-image: repeating-linear-gradient(0deg, rgba(255,255,255,0.02) 0 1px, transparent 1px 6px),
                     repeating-linear-gradient(90deg, rgba(0,0,0,0.01) 0 1px, transparent 1px 12px);
   opacity: 0.6;
+  z-index: 0;
 }
+
+/* Ensure page content renders above parchment overlays */
+.dndb-root > * { position: relative; z-index: 1; }
 
 /* figure gallery under hero */
 .figure-gallery { display:flex; gap:10px; margin-top:14px; justify-content:center; }

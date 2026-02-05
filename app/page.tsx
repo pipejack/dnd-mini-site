@@ -1,8 +1,23 @@
 // ...existing code...
 import Link from "next/link";
 import Image from "next/image";
+import dynamic from "next/dynamic";
+import { useRef, useState } from "react";
+
+const BuilderClient = dynamic(() => import("./components/BuilderClient"), { ssr: false });
 
 export default function Home() {
+  const modelRef = useRef<HTMLElement | null>(null);
+  const [selectedSvg, setSelectedSvg] = useState<string | null>(null);
+
+  function handleSelectModel(svg: string) {
+    setSelectedSvg(svg);
+    setTimeout(() => {
+      const el = document.getElementById("model-preview");
+      el?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 150);
+  }
+
   return (
     <div className="dndb-root">
       <nav className="nav">
@@ -128,6 +143,41 @@ export default function Home() {
               <p className="price-amount">$79</p>
               <p>Hand-painted finish and priority shipping</p>
             </div>
+          </div>
+        </div>
+      </section>
+      <section id="builder-section" className="builder-section" data-section>
+        <div className="section-inner">
+          <h2>Character Builder & Preview</h2>
+          <div className="builder-area">
+            <div className="builder-panel">
+              <BuilderClient onSelect={handleSelectModel} />
+            </div>
+            <div className="preview-panel">
+              <h3>Preview</h3>
+              <div className="preview-canvas big">
+                {selectedSvg ? (
+                  <div dangerouslySetInnerHTML={{ __html: selectedSvg }} />
+                ) : (
+                  <Image src="/figures/fig1.svg" alt="placeholder" width={220} height={280} />
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="model-preview" className="model-preview" data-section>
+        <div className="section-inner">
+          <h2>Selected Model</h2>
+          {selectedSvg ? (
+            <div className="model-canvas" dangerouslySetInnerHTML={{ __html: selectedSvg }} />
+          ) : (
+            <p className="muted">Select an image in the builder to see the 3D conversion preview and ordering options.</p>
+          )}
+          <div className="model-actions">
+            <button className="btn primary">Order Print</button>
+            <button className="btn">Request 3D Model</button>
           </div>
         </div>
       </section>

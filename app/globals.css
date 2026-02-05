@@ -108,6 +108,23 @@ body {
   .nav-links a { margin-left:12px; }
 }
 
+/* Scroll snapping layout for full-page sections */
+html, body, #__next { height: 100%; }
+.dndb-root { scroll-snap-type: y mandatory; overflow-y: auto; }
+.dndb-root > section[data-section], .dndb-root > header { scroll-snap-align: start; min-height: 90vh; display:flex; align-items:center; }
+
+.builder-area { display:flex; gap:20px; align-items:flex-start; }
+.builder-panel { flex:1; max-width:520px; }
+.preview-panel { flex:1; display:flex; flex-direction:column; gap:12px; align-items:center; }
+.preview-canvas.big { width:320px; height:420px; background:#fff; padding:12px; border-radius:8px; box-shadow:0 8px 24px rgba(2,6,23,0.06); }
+.model-canvas { width:360px; height:auto; background:#fff; padding:18px; border-radius:8px; box-shadow:0 8px 24px rgba(2,6,23,0.06); margin-top:12px; }
+.model-actions { margin-top:14px; display:flex; gap:12px; }
+
+@media (max-width:900px) {
+  .builder-area { flex-direction:column; }
+  .preview-canvas.big, .model-canvas { width:100%; }
+}
+
 /* Parchment / burnt-scroll background */
 .dndb-root {
   background-color: #efe2c9;

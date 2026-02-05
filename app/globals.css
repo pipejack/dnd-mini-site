@@ -106,3 +106,46 @@ body {
   .hero-preview { width:100%; }
   .nav-links a { margin-left:12px; }
 }
+
+/* Parchment / burnt-scroll background */
+.dndb-root {
+  background-color: #efe2c9;
+  background-image: radial-gradient(circle at 10% 10%, rgba(0,0,0,0.03) 0%, transparent 20%),
+                    radial-gradient(circle at 90% 85%, rgba(0,0,0,0.04) 0%, transparent 18%),
+                    linear-gradient(180deg, rgba(255,255,255,0.35), rgba(255,255,255,0));
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  position: relative;
+}
+
+/* burnt edges overlay */
+.dndb-root::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(1200px 400px at -10% -10%, rgba(0,0,0,0.12), transparent 30%),
+    radial-gradient(1000px 300px at 110% 110%, rgba(0,0,0,0.12), transparent 30%),
+    radial-gradient(600px 200px at 50% 120%, rgba(0,0,0,0.06), transparent 30%);
+  mix-blend-mode: multiply;
+}
+
+/* subtle paper texture using repeating linear gradients */
+.dndb-root::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: repeating-linear-gradient(0deg, rgba(255,255,255,0.02) 0 1px, transparent 1px 6px),
+                    repeating-linear-gradient(90deg, rgba(0,0,0,0.01) 0 1px, transparent 1px 12px);
+  opacity: 0.6;
+}
+
+/* figure gallery under hero */
+.figure-gallery { display:flex; gap:10px; margin-top:14px; justify-content:center; }
+.figure-thumb { width:88px; height:auto; border-radius:8px; background:#fff; padding:6px; box-shadow:0 8px 20px rgba(2,6,23,0.06); border:1px solid rgba(0,0,0,0.04); }
+
+@media (max-width:900px) {
+  .figure-gallery { justify-content:space-between; }
+}

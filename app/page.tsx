@@ -29,10 +29,17 @@ export default function Home() {
 
           <div className="hero-preview" aria-hidden>
             <svg viewBox="0 0 300 360" className="hero-figure" xmlns="http://www.w3.org/2000/svg">
-              <rect x="20" y="80" width="260" height="220" rx="12" fill="#0f172a" opacity="0.06" />
+              <rect x="20" y="80" width="260" height="220" rx="12" fill="#0f172a" opacity="0.04" />
               <circle cx="150" cy="120" r="44" fill="#6b46c1" stroke="#222" strokeWidth="3" />
               <rect x="110" y="160" width="80" height="120" rx="10" fill="#4c1d95" />
             </svg>
+
+            <div className="figure-gallery" role="list">
+              <img src="/figures/fig1.svg" alt="figurine option 1" className="figure-thumb" />
+              <img src="/figures/fig2.svg" alt="figurine option 2" className="figure-thumb" />
+              <img src="/figures/fig3.svg" alt="figurine option 3" className="figure-thumb" />
+            </div>
+
             <div className="hero-badges">
               <span>Fast turnaround</span>
               <span>Secure payments</span>
